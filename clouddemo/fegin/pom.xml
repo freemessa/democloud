@@ -6,6 +6,7 @@
         <groupId>com.example</groupId>
         <artifactId>clouddemo</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <groupId>com.example</groupId>
     <artifactId>fegin</artifactId>
@@ -56,6 +57,14 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-loadbalancer</artifactId>
         </dependency>-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
