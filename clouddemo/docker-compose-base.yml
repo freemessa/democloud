@@ -1,0 +1,84 @@
+version: '1.0'
+services:
+  eureka:
+    build:
+      context: app/eureka
+      dockerfile: Dockerfile
+    image: clouddemo/eureka-demo:1.0
+    container_name: eureka-demo
+    ports:
+      - 8083:8083
+    volumes:
+      - /usr/docker/app/data:/mnt/clouddemo/prod/data/
+      - /usr/docker/app/import:/mnt/clouddemo/prod/temp/import/
+      - /usr/docker/app/logs:/mnt/clouddemo/log
+      - /etc/localtime:/etc/localtime
+      - /usr/docker/app/apache-skywalking-apm-bin:/apache-skywalking-apm-bin
+    environment:
+      - TZ=Asia/Shanghai
+    external_links:
+      - redis
+
+  regtest:
+    build:
+      context: app/regtest
+      dockerfile: Dockerfile
+    image: clouddemo/regtest-demo:1.0
+    container_name: regtest-demo
+    ports:
+      - 8084:8084
+    volumes:
+      - /usr/docker/app/data:/mnt/clouddemo/prod/data/
+      - /usr/docker/app/import:/mnt/clouddemo/prod/temp/import/
+      - /usr/docker/app/importedTable:/importedTable/
+      - /usr/docker/app/logs:/mnt/clouddemo/log
+      - /etc/localtime:/etc/localtime
+      - /usr/docker/app/apache-skywalking-apm-bin:/apache-skywalking-apm-bin
+    environment:
+      - TZ=Asia/Shanghai
+    depends_on:
+      - eureka
+    external_links:
+      - redis
+      - mysql
+      - eureka
+  fegin:
+    build:
+      context: app/fegin
+      dockerfile: Dockerfile
+    image: clouddemo/fegin-demo:1.0
+    container_name: fegin-demo
+    volumes:
+      - /usr/docker/app/data:/mnt/clouddemo/prod/data/
+      - /usr/docker/app/import:/mnt/clouddemo/prod/temp/import/
+      - /usr/docker/app/logs:/mnt/clouddemo/log
+      - /etc/localtime:/etc/localtime
+      - /usr/docker/app/apache-skywalking-apm-bin:/apache-skywalking-apm-bin
+    environment:
+      - TZ=Asia/Shanghai
+    external_links:
+      - redis
+      - mysql
+      - eureka
+    depends_on:
+      - eureka
+ zuul:
+    build:
+      context: app/zuul
+      dockerfile: Dockerfile
+    image: clouddemo/zuul-demo:1.0
+    container_name: zuul-demo
+    volumes:
+      - /usr/docker/app/data:/mnt/clouddemo/prod/data/
+      - /usr/docker/app/import:/mnt/clouddemo/prod/temp/import/
+      - /usr/docker/app/logs:/mnt/clouddemo/log
+      - /etc/localtime:/etc/localtime
+      - /usr/docker/app/apache-skywalking-apm-bin:/apache-skywalking-apm-bin
+    environment:
+      - TZ=Asia/Shanghai
+    depends_on:
+      - eureka
+    external_links:
+      - redis
+      - mysql
+      - eureka
