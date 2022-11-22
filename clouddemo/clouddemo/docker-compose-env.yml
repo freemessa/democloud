@@ -1,0 +1,134 @@
+version: '3.3'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: demo #设置root帐号密码
+    ports:
+      - 3306:13306
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --explicit_defaults_for_timestamp=true
+      --lower_case_table_names=1
+    volumes:
+      - /usr/docker/mysql/data/db:/var/lib/mysql #数据文件挂载
+      - /usr/docker/mysql/data/conf/my.cnf:/etc/mysql/my.cnf #配置文件挂载
+      - /usr/docker/mysql/log:/var/log/mysql #日志文件挂载
+      - /usr/docker/mysql/mysql-files/:/var/lib/mysql-files/
+  redis:
+    image: redis:5.0
+    container_name: redis
+    restart: always
+    command: redis-server /etc/redis/redis.conf --appendonly yes
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - 6379:16379
+    volumes:
+      - /usr/docker/redis/data:/data #数据文件挂载
+      - /usr/docker/redis/conf:/etc/redis/redis.conf #配置文件挂载
+  rabbitmq:
+    image: rabbitmq:3.7.15-management
+    container_name: rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=demo
+      - RABBITMQ_DEFAULT_PASS=demo
+      - RABBITMQ_LOG_BASE=/var/log/rabbitmq
+      - TZ=Asia/Shanghai
+    volumes:
+      - /usr/docker/rabbitmq/data:/var/lib/rabbitmq #数据文件挂载
+      - /usr/docker/rabbitmq/log:/var/log/rabbitmq #日志文件挂载
+    expose:
+      - 5672
+    ports:
+      - 15672:15672
+  nginx_isr:
+    image: nginx:1.10
+    container_name: nginx
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /usr/docker/nginx/conf:/etc/nginx #配置文件挂载
+      - /usr/docker/nginx/html:/usr/share/nginx/html #静态资源根目录挂载
+      - /usr/docker/nginx/logs:/var/log/nginx #日志文件挂载
+      - /usr/docker/app/data/filestorage:/usr/local/filestorage #本地文件挂载目录
+    ports:
+      - 10080:10080
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+      - STORAGE_TYPE=mysql
+      - MYSQL_DB=zipkin
+      - MYSQL_USER=root
+      - MYSQL_PASS=root
+      - MYSQL_HOST=127.0.0.1
+      - MYSQL_TCP_PORT=3306
+    ports:
+      - 9411:9411
+  seata-server:
+    image: seataio/seata-server:${latest-release-version}
+    hostname: seata-server
+    ports:
+      - "8091:8091"
+      - "7091:7091"
+    environment:
+      - SEATA_PORT=8091
+      - STORE_MODE=file
+
+  seata-nacos:
+    restart: always
+    image: nacos/nacos-server
+    hostname: nacos-server
+    deploy:
+      mode: relicates
+      replicas: 2
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
+    ports:
+      - 8848:8848
+      - 9848:9848
+      - 9849:9849
+    privileged: true
+    environment:
+      NACIS_AUTH_ENABLE: "true"
+      NACOS_AUTH_TOKEN_EXPIRE_SECONDS: 18000
+      JVM_XMS: 128m
+      JVM_XMX: 128m
+      JVM_MS: 64m
+      JVM_mms: 64m
+      PREFER_HOST_MODE: hostname
+      MODE: standalone
+      NACOS_REPLICAS: 1
+      SPRING_DATASOURCE_PLATFORM: mysql
+      MYSQL_SERVICE_HOST: 127.0.0.1
+      MYSQL_SERVICE_DB_NAME: nacos_config
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_USER: root
+      MYSQL_SERVICE_PASSWORD: root
+    volumes:
+      - ./standalone-logs/:/homr/nacos/logs
+      - ./plugins/:/home/nacos/plugins
+      - ./data:/home/nacos/data
+      - nacos-conf:/home/nacos/conf
+volumes:
+  nacos-conf:
+    driver: local
+    driver_opts:
+      type: 'none'
+      device: '${PWD}/conf'
+      o: 'bind'
+
