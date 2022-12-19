@@ -1,0 +1,75 @@
+version: "3"
+services:
+  nacos1:
+    hostname: nacos1
+    container_name: nacos1
+    image: nacos/nacos-server:latest
+    volumes:
+      #官方例子中是基于mysql5.6的，现在改为mysql8需要加入最新的驱动。
+      - ./plugins/mysql/:/home/nacos/plugins/mysql/
+      - ./cluster-logs/nacos1:/home/nacos/logs
+      - ./init.d/custom.properties:/home/nacos/init.d/custom.properties
+    ports:
+      - "8848:8848"
+      - "9555:9555"
+    env_file:
+      - ../env/nacos-hostname.env
+    restart: always
+    depends_on:
+      - mysql-nacos
+
+  nacos2:
+    hostname: nacos2
+    image: nacos/nacos-server:latest
+    container_name: nacos2
+    volumes:
+      #官方例子中是基于mysql5.6的，现在改为mysql8需要加入最新的驱动。
+      - ./plugins/mysql/:/home/nacos/plugins/mysql/
+      - ./cluster-logs/nacos2:/home/nacos/logs
+      - ./init.d/custom.properties:/home/nacos/init.d/custom.properties
+    ports:
+      - "8849:8848"
+    env_file:
+      - ../env/nacos-hostname.env
+    restart: always
+    depends_on:
+      - mysql-nacos
+  nacos3:
+    hostname: nacos3
+    image: nacos/nacos-server:latest
+    container_name: nacos3
+    volumes:
+      #官方例子中是基于mysql5.6的，现在改为mysql8需要加入最新的驱动。
+      - ./plugins/mysql/:/home/nacos/plugins/mysql/
+      - ./cluster-logs/nacos3:/home/nacos/logs
+      - ./init.d/custom.properties:/home/nacos/init.d/custom.properties
+    ports:
+      - "8850:8848"
+    env_file:
+      - ../env/nacos-hostname.env
+    restart: always
+    depends_on:
+      - mysql-nacos
+  mysql:
+    container_name: mysql-nacos
+    image: nacos/nacos-mysql:8
+    env_file:
+      - ../env/mysql.env
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  nginx:
+    image: nginx:1.10
+    container_name: nginx-nacos
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./nginx/conf:/etc/nginx #配置文件挂载
+      - ./nginx/logx:/etc/nginx/logs #日志文件挂载
+      - ./nginx/html:/usr/share/nginx/html #静态资源根目录挂载
+      - ./nginx/logs:/var/log/nginx #日志文件挂载
+      - ./app/data/filestorage:/usr/local/filestorage #本地文件挂载目录
+    ports:
+      - 10080:10080

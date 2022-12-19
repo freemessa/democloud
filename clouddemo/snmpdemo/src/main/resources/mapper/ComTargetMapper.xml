@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.snmpdemo.map.ComTargetMapper">
+    <resultMap id="BaseResultMap" type="com.example.snmpdemo.domain.ComTarget">
+        <constructor>
+            <idArg column="id" javaType="_long" jdbcType="BIGINT" />
+            <arg column="ipaddress" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="community" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="version" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="retries" javaType="java.lang.Integer" jdbcType="NUMERIC" />
+            <arg column="timeout" javaType="java.lang.Integer" jdbcType="NUMERIC" />
+        </constructor>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, ipaddress, community, version, retries, timeout
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="_long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+</mapper>

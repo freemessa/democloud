@@ -2,7 +2,7 @@ version: '3.3'
 services:
   mysql:
     image: mysql:8.0
-    container_name: mysql_isr
+    container_name: mysql
     restart: always
     environment:
       TZ: Asia/Shanghai
@@ -21,7 +21,7 @@ services:
       - /usr/docker/mysql/mysql-files/:/var/lib/mysql-files/
   redis:
     image: redis:5.0
-    container_name: redis_isr
+    container_name: redis
     restart: always
     command: redis-server /etc/redis/redis.conf --appendonly yes
     environment:
@@ -49,7 +49,7 @@ services:
       - 15672:15672
   nginx_isr:
     image: nginx:1.10
-    container_name: nginx_isr
+    container_name: nginx
     restart: always
     environment:
       - TZ=Asia/Shanghai
@@ -60,3 +60,75 @@ services:
       - /usr/docker/app/data/filestorage:/usr/local/filestorage #本地文件挂载目录
     ports:
       - 10080:10080
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+      - STORAGE_TYPE=mysql
+      - MYSQL_DB=zipkin
+      - MYSQL_USER=root
+      - MYSQL_PASS=root
+      - MYSQL_HOST=127.0.0.1
+      - MYSQL_TCP_PORT=3306
+    ports:
+      - 9411:9411
+  seata-server:
+    image: seataio/seata-server:${latest-release-version}
+    hostname: seata-server
+    ports:
+      - "8091:8091"
+      - "7091:7091"
+    environment:
+      - SEATA_PORT=8091
+      - STORE_MODE=file
+
+  seata-nacos:
+    restart: always
+    image: nacos/nacos-server
+    hostname: nacos-server
+    deploy:
+      mode: relicates
+      replicas: 2
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
+    ports:
+      - 8848:8848
+      - 9848:9848
+      - 9849:9849
+    privileged: true
+    environment:
+      NACIS_AUTH_ENABLE: "true"
+      NACOS_AUTH_TOKEN_EXPIRE_SECONDS: 18000
+      JVM_XMS: 128m
+      JVM_XMX: 128m
+      JVM_MS: 64m
+      JVM_mms: 64m
+      PREFER_HOST_MODE: hostname
+      MODE: standalone
+      NACOS_REPLICAS: 1
+      SPRING_DATASOURCE_PLATFORM: mysql
+      MYSQL_SERVICE_HOST: 127.0.0.1
+      MYSQL_SERVICE_DB_NAME: nacos_config
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_USER: root
+      MYSQL_SERVICE_PASSWORD: root
+    volumes:
+      - ./standalone-logs/:/homr/nacos/logs
+      - ./plugins/:/home/nacos/plugins
+      - ./data:/home/nacos/data
+      - nacos-conf:/home/nacos/conf
+volumes:
+  nacos-conf:
+    driver: local
+    driver_opts:
+      type: 'none'
+      device: '${PWD}/conf'
+      o: 'bind'
+

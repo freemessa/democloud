@@ -1,0 +1,48 @@
+version: '3'
+services:
+  elasticsearch:
+    container_name: elasticsearch-1
+    image: elasticsearch:7.17.0
+    # 端口映射 主机 -> 容器
+    ports:
+      - "9200:9200"
+    volumes:
+      - ./elasticsearch1/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./elasticsearch1/data:/usr/share/elasticsearch/data
+      - ./elasticsearch1/plugins:/usr/share/elasticsearch/plugins
+      # 挂载日志
+      - ./elasticsearch1/ellog:/usr/share/elasticsearch/logs
+    environment:
+      - http.host=0.0.0.0
+      - transport.host=localhost
+      - network.host=0.0.0.0
+      - "ES_JAVA_OPTS=-Xms64m -Xmx512m"
+      - "discovery.type=single-node"
+      - "COMPOSE_PROJECT_NAME=elasticsearch-server"
+    restart: always
+    # 节点名称
+    hostname: elasticsearch_1
+
+  elasticsearch2:
+    container_name: elasticsearch-2
+    image: elasticsearch:7.17.0
+    # 端口映射 主机 -> 容器
+    ports:
+      - "9201:9200"
+    volumes:
+      - ./elasticsearch2/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./elasticsearch2/data:/usr/share/elasticsearch/data
+      - ./elasticsearch2/plugins:/usr/share/elasticsearch/plugins
+      # 挂载日志
+      - ./elasticsearch2/ellog:/usr/share/elasticsearch/logs
+    environment:
+      - http.host=0.0.0.0
+      - transport.host=localhost
+      - network.host=0.0.0.0
+      - "ES_JAVA_OPTS=-Xms64m -Xmx512m"
+      - "discovery.type=single-node"
+      - "COMPOSE_PROJECT_NAME=elasticsearch-server"
+    restart: always
+    # 节点名称
+    hostname: elasticsearch_2
+
