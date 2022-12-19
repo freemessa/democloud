@@ -73,3 +73,19 @@ services:
       - ./app/data/filestorage:/usr/local/filestorage #本地文件挂载目录
     ports:
       - 10080:10080
+      -
+  sentinel:
+    image: bladex/sentinel-dashboard
+    container_name: sentinel-dashboard
+    restart: always
+    environment:
+      auth.enabled: "true"
+      sentinel.dashboard.auth.username: admin
+      sentinel.dashboard.auth.password: admin
+      server.servlet.session.timeout: 7200
+      - JAVA_OPTS: "-Dserver.port=8858 -Dcsp.sentinel.dashboard.server=localhost:8858 -Dproject.name=sentinel-dashboard -Djava.security.egd=file:/dev/./urandom -Dcsp.sentinel.api.port=8719"
+    volumes:
+      - ./logs:/root/logs
+    ports:
+      - "8858:8858"
+      - "8719:8719"
