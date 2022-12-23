@@ -1,0 +1,26 @@
+server:
+  port: 8180
+#logging:
+#  config: classpath.log4j2.xml
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 1000MB
+  application:
+    name: minio-server-demo
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.216.111:9080
+        namespace: dev
+
+minio:
+  url: http://192.168.216.121:9002
+  accessKey: minio
+  secretKey: minio12345
+  bucketName: test #minio 空间名
+
+
+
