@@ -2,10 +2,11 @@ version: '3'
 services:
   elasticsearch:
     container_name: elasticsearch-1
-    image: elasticsearch:7.17.0
+    image: elasticsearch:7.12.0
     # 端口映射 主机 -> 容器
     ports:
       - "9200:9200"
+      - "9300:9300"
     volumes:
       - ./elasticsearch1/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./elasticsearch1/data:/usr/share/elasticsearch/data
@@ -25,7 +26,7 @@ services:
 
   elasticsearch2:
     container_name: elasticsearch-2
-    image: elasticsearch:7.17.0
+    image: elasticsearch:7.12.0
     # 端口映射 主机 -> 容器
     ports:
       - "9201:9200"
@@ -45,4 +46,47 @@ services:
     restart: always
     # 节点名称
     hostname: elasticsearch_2
+
+  kibana:
+    container_name: kibana
+    # elk版本一致
+    image: kibana:7.12.0
+    # 端口映射 主机 -> 容器
+    ports:
+      - "5601:5601"
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    restart: always
+    # 节点名称
+    hostname: kibana
+
+  minio:
+    container_name: minio
+    image: minio/minio
+    ports:
+      - "9001:9001"
+      - "9002:9002"
+    environment:
+      TZ: Asia/Shanghai
+      LANG: en_US.UTF-8
+      MINIO_PROMETHEUS_AUTH_TYPE: "public"
+      MINIO_ROOT_USER: "minio"
+      MINIO_ROOT_PASSWORD: "minio12345"
+    volumes:
+      - ./minio/data:/data
+      - ./minio/config:/root/.minio
+      - ./minio/minio:/minio
+      - ./minio/data1:/data1
+      - ./minio/data2:/data2
+      - ./minio/data3:/data3
+      - ./minio/data4:/data4
+    restart: unless-stopped
+    hostname: minio
+    #command: server /data --console-address ":9002" --address ":9001"
+    command: server /data{1...4} --console-address ":9002" --address ":9001"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+
 
