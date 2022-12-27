@@ -13,14 +13,16 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.216.111:9080
+        server-addr: 10.28.114.158:8848
         namespace: dev
 
 minio:
-  url: http://192.168.216.121:9002
+  url: http://10.28.114.158:9001  # api 端口 非 console 端口
   accessKey: minio
   secretKey: minio12345
   bucketName: test #minio 空间名
+swagger:
+  enable: false
 
 
 

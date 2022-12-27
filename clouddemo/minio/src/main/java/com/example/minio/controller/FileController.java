@@ -22,10 +22,18 @@ public class FileController {
     @Autowired
     MinioUtil minioUtil;
 
+    @ApiOperation("创建一个桶")
+    @RequestMapping(value ="/createBucket", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxResult createBucket(@RequestParam String bucket) throws Exception {
+        minioUtil.createBucket(bucket);
+        return  AjaxResult.success();
+    }
+
     @ApiOperation("上传一个文件")
     @RequestMapping(value ="/uploadfile", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxResult fileUpload(@RequestParam MultipartFile uploadFile, @RequestParam String bucket,
+    public AjaxResult fileUpload(@RequestPart @RequestParam("file") MultipartFile uploadFile, @RequestParam String bucket,
                                  @RequestParam(required = false) String objectName) throws Exception {
         if (objectName != null) {
             minioUtil.uploadFile(uploadFile.getInputStream(), bucket,
@@ -50,7 +58,7 @@ public class FileController {
         return AjaxResult.success("200", minioUtil.listFiles(bucket));
     }
 
-    @ApiOperation("下载一个文件")
+    @ApiOperation("下载一个文件： 浏览器禁用了createObjectURL使用方式 knife4j 当前版本不支持调试")
     @RequestMapping(value = "/downloadFile",method = RequestMethod.GET)
     @ResponseBody
     public void downloadFIle(@RequestParam String bucket, @RequestParam String objectName, HttpServletResponse response)
@@ -72,7 +80,7 @@ public class FileController {
         return AjaxResult.success();
     }
 
-    @ApiOperation("删除一个桶")
+    @ApiOperation("删除一个桶： 需先删除桶内文件")
     @RequestMapping(value = "/deleteBucket",method = RequestMethod.GET)
     @ResponseBody
     public AjaxResult deleteBucket(@RequestParam String bucket) throws Exception {

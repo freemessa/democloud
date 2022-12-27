@@ -4,7 +4,6 @@ import com.example.minio.domain.Fileinfo;
 import io.minio.*;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
-import org.apache.tomcat.jni.FileInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,6 +39,7 @@ public class MinioUtil {
      * 列出所有的桶
      */
     public List<String> listBuckets() throws  Exception {
+
         List<Bucket> list = minioClient.listBuckets();
         List<String> names = new ArrayList<>();
         list.forEach(b -> {
@@ -88,7 +88,7 @@ public class MinioUtil {
     /*
      * 删除 一个对象
      */
-    public void deleteObject(String bucket, String objcetName) throws Exception {
-        minioClient.removeObject(RemoveObjectArgs.builder().bucket(bucket).object(objcetName).build());
+    public void deleteObject(String bucket, String objectName) throws Exception {
+        minioClient.removeObject(RemoveObjectArgs.builder().bucket(bucket).object(objectName).build());
     }
 }

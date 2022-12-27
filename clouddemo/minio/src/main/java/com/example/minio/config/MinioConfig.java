@@ -18,6 +18,9 @@ public class MinioConfig {
 
     @Bean
     public MinioClient getMinioClient() {
+        System.out.println(url);
+        System.out.println(accessKey);
+        System.out.println(secretKey);
         MinioClient minioClient = MinioClient.builder().endpoint(url)
                 .credentials(accessKey, secretKey).build();
         return minioClient;
