@@ -1,0 +1,94 @@
+server:
+  port: 9199
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: demo-gateway
+  cloud:
+    nacos:
+      config:
+        server-addr: 10.28.114.158:8848
+        namespace: dev
+        username: nacos
+        password: nacos
+        group: DEFAULT_GROUP
+        #系统自动导入路由规则不支持json格式
+        file-extension: yml
+        extension-configs:
+          - dataId: gateway-router.yml
+            group: DEFAULT_GROUP
+            refresh: true
+      discovery:
+        server-addr: 10.28.114.158:8848
+        namespace: dev
+    sentinel:
+      #enabled: true
+      eager: true
+      transport:
+        port: 8719
+        dashboard: 10.28.114.158:8858
+      datasource:
+        ds1:
+          nacos:
+            server-addr: 10.28.114.158:8848
+            namespace: dev
+            username: nacos
+            password: nacos
+            groupId: DEFAULT_GROUP
+            dataId: gateway-flow-minio
+            rule-type: flow
+      scg:
+        fallback:
+          mode: response
+          response-status: 200
+          response-body: '{"code": 502,"message": "请求太频繁...请稍后再试!"}'
+      filter:
+        enabled: false
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: regtest
+          uri: lb://regtest
+          predicates:
+            - Path=/regtest/**
+          filters:
+            - StripPrefix=1
+        - id: minio-server-demo
+          uri: lb://minio-server-demo
+          predicates:
+            - Path=/minio-server-demo/**
+          filters:
+            - StripPrefix=1
+
+    loadbalancer:
+      retry:
+        enabled: true
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+swagger:
+  enbale: true
+
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include:
+          - shutdown
+          - health
+# 配置输出日志
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.ipc.netty: DEBUG

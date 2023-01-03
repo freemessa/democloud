@@ -5,13 +5,15 @@
     <packaging>pom</packaging>
     <modules>
         <module>eureka</module>
-        <module>regtest</module>
         <module>fegin</module>
         <module>zuul</module>
+        <module>regtest</module>
+        <module>fegin-nacos</module>
         <module>webflux</module>
         <module>nacosc</module>
         <module>nacoss</module>
         <module>snmpdemo</module>
+        <module>gateway</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -27,8 +29,8 @@
     <description>Cloud Demo project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>
-        <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
-        <spring-cloud-alibaba.version>0.2.2.RELEASE</spring-cloud-alibaba.version>
+        <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
     </properties>
     <dependencies>
         <dependency>
@@ -49,7 +51,7 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
+                <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
