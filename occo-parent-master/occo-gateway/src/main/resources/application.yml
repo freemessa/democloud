@@ -1,0 +1,69 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.28.114.158:8848
+        namespace: dev
+    sentinel:
+      #enabled: true
+      eager: true
+      transport: 
+        port: 8719
+        dashboard: 10.28.114.158:8858
+      datasource:
+        ds1:
+          nacos:
+            server-addr: 10.28.114.158:8848
+            namespace: dev
+            username: nacos
+            password: nacos
+            groupId: DEFAULT_GROUP
+            dataId: gateway-sentinel
+            rule-type: flow
+      scg:
+        fallback:
+          mode: response
+          response-status: 200
+          response-body: '{"code": 502,"message": "请求太频繁...请稍后再试!"}'
+      filter:
+        enabled: true
+        url-patterns: /**
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
+          #route-id-prefix: sentinel
+    loadbalancer: 
+      retry:
+        enabled: true
+    
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include:
+        - shutdown
+        - health
+# 配置输出日志
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.ipc.netty: DEBUG
+
+knife:
+  swagger:
+    version: 1.0
+    basePackage: com.xx.controller
+    title: 标题
+    description: 描述
+    contactName: 联系人
+    enabled: true
+

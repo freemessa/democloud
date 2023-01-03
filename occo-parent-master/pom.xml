@@ -1,0 +1,131 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.gitee.occo</groupId>
+	<artifactId>occo-parent</artifactId>
+	<version>2.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>occo-gateway</module>
+	</modules>
+
+	<!--<scm>
+		<connection>scm:git:https://gitee.com/occo/occo-parent.git</connection>
+		<developerConnection>scm:git:https://gitee.com/occo/occo-parent.git</developerConnection>
+		<url>https://gitee.com/occo/occo-parent</url>
+		<tag>v0.0.1</tag>
+	</scm>-->
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<!--基础引入 -->
+		<spring-boot.version>2.3.12.RELEASE</spring-boot.version>
+		<spring-cloud.version>Hoxton.SR12</spring-cloud.version>
+		<spring-cloud-alibaba.version>2.2.8.RELEASE</spring-cloud-alibaba.version>
+		<!-- 其他jar -->
+		<fastjson.version>2.0.7</fastjson.version>
+		<knife4j.version>3.0.3</knife4j.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+				<version>${spring-cloud-alibaba.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
+			</dependency>
+			<!-- Swagger 增强knife4j UI资源与微服务starter -->
+			<dependency>
+				<groupId>com.github.xiaoymin</groupId>
+				<artifactId>knife4j-spring-boot-starter</artifactId>
+				<version>${knife4j.version}</version>
+				<scope>compile</scope>
+			</dependency>
+			<!-- Swagger 增强knife4j 微服务starter -->
+			<dependency>
+				<groupId>com.github.xiaoymin</groupId>
+				<artifactId>knife4j-micro-spring-boot-starter</artifactId>
+				<version>${knife4j.version}</version>
+				<scope>compile</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.1</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>2.2.6.RELEASE</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>3.2.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.3</version>
+					<configuration>
+						<tagNameFormat>v@{project.version}</tagNameFormat>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+						<indentSize>4</indentSize>
+						<useEditMode>true</useEditMode>
+						<localCheckout>true</localCheckout>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+		</pluginRepository>
+	</pluginRepositories>
+</project>

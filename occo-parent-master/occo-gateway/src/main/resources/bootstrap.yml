@@ -1,0 +1,20 @@
+server:
+  port: 9999
+  
+spring:
+  application:
+    name: occo-gateway
+  cloud:
+    nacos:
+      config:
+        server-addr: 10.28.114.158:8848
+        namespace: dev
+        username: nacos
+        password: nacos
+        group: DEFAULT_GROUP
+        #系统自动导入路由规则不支持json格式
+        file-extension: yml
+        extension-configs:
+        - dataId: gateway-router.yml
+          group: DEFAULT_GROUP
+          refresh: true
