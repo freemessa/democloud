@@ -61,8 +61,8 @@ swagger:
 
 ldap:
   url: "ldap://192.168.1.1:389"
-  base: DC=isoftstone,DC=com
-  userDn: "administrator@isoftstone.com"
+  base: DC=abc,DC=com
+  userDn: "administrator@abc.com"
   userPwd: 123456
   referral: follow
-  domainName: "%s@isoftstone.com"
+  domainName: "%s@abc.com"

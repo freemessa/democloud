@@ -61,11 +61,11 @@ swagger:
 
 ldap:
   url: "ldap://127.0.0.1:389"
-  base: DC=isoftstone,DC=com
-  userDn: "sbzhengc@isoftstone.com"
-  userPwd: Xyz@100200300402
+  base: DC=abc,DC=com
+  userDn: "bc@abc.com"
+  userPwd: 100300402
   referral: follow
-  domainName: "%s@isoftstone.com"
+  domainName: "%s@abc.com"
 
 mybatis:
   mapper-locations: classpath:mybatis/**/*.xml

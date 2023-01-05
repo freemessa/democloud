@@ -35,9 +35,9 @@ spring:
 
   ldap:
     urls: ldap://127.0.0.1:389
-    base: DC=isoftstone,DC=com
-    username: "sbzhengc@isoftstone.com"
-    password: Xyz@100200300402
+    base: DC=abc,DC=com
+    username: "bc@abc.com"
+    password: 100300402
 
 swagger:
   enable: true
