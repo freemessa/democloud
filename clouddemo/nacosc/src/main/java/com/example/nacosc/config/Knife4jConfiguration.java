@@ -32,8 +32,8 @@ public class Knife4jConfiguration {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("regtest接口文档")   // 设置文档标题
-                .description("regtest接口说明")    // 文档描述
+                .title("nacosc接口文档")   // 设置文档标题
+                .description("nacosc接口说明")    // 文档描述
                 .version("1.0.0")   //版本号
                 .build();
     }

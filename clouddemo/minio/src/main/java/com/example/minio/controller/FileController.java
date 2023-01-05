@@ -1,5 +1,6 @@
 package com.example.minio.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.example.minio.domain.AjaxResult;
 import com.example.minio.utils.MinioUtil;
 import io.swagger.annotations.Api;
@@ -53,6 +54,7 @@ public class FileController {
 
     @ApiOperation("列出一个桶的所有文件和目录")
     @RequestMapping(value = "/listFiles",method = RequestMethod.GET)
+    @SentinelResource(value = "listFiles")
     @ResponseBody
     public AjaxResult listFiles(@RequestParam String bucket) throws Exception {
         return AjaxResult.success("200", minioUtil.listFiles(bucket));

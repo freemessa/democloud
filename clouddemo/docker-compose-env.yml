@@ -8,7 +8,7 @@ services:
       TZ: Asia/Shanghai
       MYSQL_ROOT_PASSWORD: demo #设置root帐号密码
     ports:
-      - 3306:13306
+      - 13306:3306
     command:
       --character-set-server=utf8mb4
       --collation-server=utf8mb4_general_ci
@@ -27,7 +27,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
     ports:
-      - 6379:16379
+      - 6379:6379
     volumes:
       - /usr/docker/redis/data:/data #数据文件挂载
       - /usr/docker/redis/conf:/etc/redis/redis.conf #配置文件挂载

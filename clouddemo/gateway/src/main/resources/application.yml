@@ -10,7 +10,7 @@ spring:
     nacos:
       config:
         server-addr: 10.28.114.158:8848
-        namespace: dev
+        namespace: test
         username: nacos
         password: nacos
         group: DEFAULT_GROUP
@@ -22,7 +22,7 @@ spring:
             refresh: true
       discovery:
         server-addr: 10.28.114.158:8848
-        namespace: dev
+        namespace: test
     sentinel:
       #enabled: true
       eager: true
@@ -33,7 +33,7 @@ spring:
         ds1:
           nacos:
             server-addr: 10.28.114.158:8848
-            namespace: dev
+            namespace: test
             username: nacos
             password: nacos
             groupId: DEFAULT_GROUP

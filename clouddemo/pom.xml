@@ -14,6 +14,9 @@
         <module>nacoss</module>
         <module>snmpdemo</module>
         <module>gateway</module>
+        <module>common</module>
+        <module>ldapauth</module>
+        <module>adauth</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

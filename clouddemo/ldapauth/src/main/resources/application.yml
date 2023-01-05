@@ -1,0 +1,44 @@
+server:
+  port: 8380
+
+spring:
+  application:
+    name: ldapauth-server-demo
+  datasource:
+    # driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:ldap://127.0.0.1:389 # jdbc:mysql://localhost:3306/db?characterEncoding=utf-8
+    username: root
+    password: root
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.28.114.158:8848
+        namespace: test
+        ip: 10.28.114.158 #强制指定为服务接口ip
+    sentinel:
+      transport:
+        dashboard: 10.28.114.158:8858
+        port: 8719
+        client-ip: 10.28.114.158 #强制指定为服务接口ip
+      eager: true
+      filter:
+        url-patterns: /**
+      datasource:
+        flow:
+          nacos:
+            server-addr: $(spring.cloud.nacos.discovery.server-addr)
+            namespace: $(spring.cloud.nacos.discovery.namespace)
+            data-id: minio-server-demo-flow  # 读取配置文件的 data-id
+            group-id: DEFAULT_GROUP # nacos连接的分组
+            data-type: json  #  读取培训文件类型为json
+            rule-type: flow # 流控规则  rule-type 配置表示该数据源中的规则属于哪种类型的规则(flow，degrade，authority，system, param-flow, gw-flow, gw-api-group)
+
+  ldap:
+    urls: ldap://127.0.0.1:389
+    base: DC=isoftstone,DC=com
+    username: "sbzhengc@isoftstone.com"
+    password: Xyz@100200300402
+
+swagger:
+  enable: true
+  apipath: ldapauth
