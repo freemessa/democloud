@@ -1,0 +1,28 @@
+version: '3'
+services:
+  kuboard:
+    container_name: kuboard
+    image: eipwork/kuboard:v3.5.0.3
+    ports:
+      - "6017:80"
+      - "10081:10081"
+    volumes:
+      - "/home/skynet/kuboard/data:/data"
+    environment:
+      KUBOARD_ENDPOINT: http://192.168.216.121:6017
+      KUBOARD_AGENT_SERVER_TCP_PORT: 10081
+
+    restart: unless-stopped
+    hostname: kuboard
+
+  kuboard-spray:
+    container_name: kuboard-spray
+    image: swr.cn-east-2.myhuaweicloud.com/kuboard/kuboard-spray:latest-amd64 #eipwork/kuboard-spray:lastest-amd64
+    ports:
+      - "6066:80"
+    volumes:
+      - "/home/skynet/kuboard-spray/data:/data"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+    restart: unless-stopped
+    hostname: kuboard-spray
