@@ -15,7 +15,7 @@ public class CorsConfig {
     CorsFilter corsFilter() {
         CorsConfiguration configuration = new CorsConfiguration();
         //configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.addAllowedOrigin("http://10.28.114.*:8009/");
+        configuration.addAllowedOrigin("http://192.168.137.*:8009/");
         configuration.setAllowCredentials(true);
         //configuration.setAllowedMethods(Arrays.asList("*"));
         //configuration.setAllowedHeaders(Arrays.asList("*"));

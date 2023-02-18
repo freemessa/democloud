@@ -1,0 +1,11 @@
+# 添加负载均衡配置
+upstream nacosss {
+    server 192.168.137.138:9829 weight=1 max_fails=2 fail_timeout=10s;
+    server 192.168.137.138:9839 weight=1 max_fails=2 fail_timeout=10s;
+    server 192.168.137.138:9819 weight=1 max_fails=2 fail_timeout=10s;
+}
+
+server {
+    listen       9849;
+    proxy_pass nacosss;
+}

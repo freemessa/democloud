@@ -9,7 +9,7 @@ import com.example.snmpdemo.pdu.VariableBindings;
 /**
  * BER解码
  *
- * @author : zhengshabo
+ * @author : sky
  * @version : 1.0
  * @since : 2022/11/1 11:12
  */

@@ -1,6 +1,5 @@
 package com.example.flowable.config;
 
-import liquibase.pro.packaged.D;
 import org.flowable.ui.idm.properties.FlowableIdmAppProperties;
 import org.flowable.ui.idm.servlet.ApiDispatcherServletConfiguration;
 import org.flowable.ui.modeler.properties.FlowableModelerAppProperties;

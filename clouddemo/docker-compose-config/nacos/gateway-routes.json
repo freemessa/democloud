@@ -1,0 +1,110 @@
+[
+  {
+    "id": "sky-minio-service",
+    "uri": "lb://sky-minio-service",
+    "order": 0,
+    "predicates": [
+      { "args": { "pattern": "/sky-minio-service/**" }, "name": "Path" }
+    ],
+    "filters": [{ "name": "StripPrefix", "args": { "_genkey_0": "1" } }]
+  },
+  {
+    "id": "sky-auth-service-xxx",
+    "uri": "lb://sky-auth-service-xxx",
+    "order": 0,
+    "predicates": [
+      { "args": { "pattern": "/sky-auth-service-xxx/**" }, "name": "Path" }
+    ],
+    "filters": [{ "name": "StripPrefix", "args": { "_genkey_0": "1" } }]
+  },
+  {
+    "id": "sky-auth-service",
+    "uri": "lb://sky-auth-service",
+    "order": 0,
+    "predicates": [
+      { "args": { "pattern": "/sky-auth-service/**" }, "name": "Path" }
+    ],
+    "filters": [{ "name": "StripPrefix", "args": { "_genkey_0": "1" } }]
+  },
+  {
+    "id": "sky-system-service",
+    "uri": "lb://sky-system-service",
+    "order": 1,
+    "predicates": [
+      { "args": { "pattern": "/sky-system-service/**" }, "name": "Path" }
+    ],
+    "filters": [{ "name": "StripPrefix", "args": { "_genkey_0": "1" } }]
+  },
+  {
+    "id": "sky-system-service-xxz",
+    "uri": "lb://sky-system-service-xxz",
+    "order": 1,
+    "predicates": [
+      { "args": { "pattern": "/sky-system-service-xxz/**" }, "name": "Path" }
+    ],
+    "filters": [{ "name": "StripPrefix", "args": { "_genkey_0": "1" } }]
+  },
+  {
+    "id": "sky-biz-service",
+    "uri": "lb://sky-biz-service",
+    "order": 0,
+    "predicates": [
+      { "args": { "pattern": "/sky-biz-service/**" }, "name": "Path" }
+    ],
+    "filters": [{ "name": "StripPrefix", "args": { "_genkey_0": "1" } }]
+  },
+  {
+    "id": "sky-process-service",
+    "uri": "lb://sky-process-service",
+    "order": 0,
+    "predicates": [
+      { "args": { "pattern": "/sky-process-service/**" }, "name": "Path" }
+    ],
+    "filters": [{ "name": "StripPrefix", "args": { "_genkey_0": "1" } }]
+  },
+  {
+    "id": "sky-process-data-service",
+    "uri": "lb://sky-process-data-service",
+    "order": 0,
+    "predicates": [
+      { "args": { "pattern": "/sky-process-data-service/**" }, "name": "Path" }
+    ],
+    "filters": [{ "name": "StripPrefix", "args": { "_genkey_0": "1" } }]
+  },
+  {
+    "id": "sky-integration-service",
+    "uri": "lb://sky-integration-service",
+    "order": 0,
+    "predicates": [
+      { "args": { "pattern": "/sky-integration-service/**" }, "name": "Path" }
+    ],
+    "filters": [{ "name": "StripPrefix", "args": { "_genkey_0": "1" } }]
+  },
+  {
+    "id": "sky-common-service",
+    "uri": "lb://sky-common-service",
+    "order": 0,
+    "predicates": [
+      { "args": { "pattern": "/sky-common-service/**" }, "name": "Path" }
+    ],
+    "filters": [{ "name": "StripPrefix", "args": { "_genkey_0": "1" } }]
+  },
+  {
+    "id": "sky-auth-xxy",
+    "uri": "lb://sky-auth-xxy",
+    "order": 0,
+    "predicates": [
+      { "args": { "pattern": "/sky-auth-xxy/**" }, "name": "Path" }
+    ],
+    "filters": [{ "name": "StripPrefix", "args": { "_genkey_0": "1" } }]
+  },
+  {
+    "id": "sky-system-xxy",
+    "uri": "lb://sky-system-xxy",
+    "order": 0,
+    "predicates": [
+      { "args": { "pattern": "/sky-system-xxy/**" }, "name": "Path" }
+    ],
+    "filters": [{ "name": "StripPrefix", "args": { "_genkey_0": "1" } }]
+  }
+]

@@ -64,6 +64,8 @@ services:
       - ./mysql:/var/lib/mysql
     ports:
       - "3306:3306"
+    command:
+      --lower_case_table_names=1
   nginx:
     image: nginx:1.10
     container_name: nginx-nacos

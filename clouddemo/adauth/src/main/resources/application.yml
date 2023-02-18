@@ -18,14 +18,14 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 10.28.114.158:8848
+        server-addr: 192.168.216.111:8848
         namespace: test
-        ip: 10.28.114.158
+        ip: 192.168.216.111
     sentinel:
       transport:
-        dashboard: 10.28.114.158:8858
+        dashboard: 192.168.216.111:8858
         port: 8719
-        client-ip: 10.28.114.158
+        client-ip: 192.168.216.111
       eager: true
       filter:
         url-patterns: /**
@@ -34,13 +34,13 @@ spring:
           nacos:
             server-addr: $(spring.cloud.nacos.discovery.server-addr)
             namespace: $(spring.cloud.nacos.discovery.namespace)
-            data-id: minio-server-demo-flow  # ¶ÁÈ¡ÅäÖÃÎÄ¼þµÄ data-id
-            group-id: DEFAULT_GROUP # nacosÁ¬½ÓµÄ·Ö×é
-            data-type: json  #  ¶ÁÈ¡ÅàÑµÎÄ¼þÀàÐÍÎªjson
-            rule-type: flow # Á÷¿Ø¹æÔò  rule-type ÅäÖÃ±íÊ¾¸ÃÊý¾ÝÔ´ÖÐµÄ¹æÔòÊôÓÚÄÄÖÖÀàÐÍµÄ¹æÔò(flow£¬degrade£¬authority£¬system, param-flow, gw-flow, gw-api-group)
+            data-id: minio-server-demo-flow  # ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ data-id
+            group-id: DEFAULT_GROUP # nacosï¿½ï¿½ï¿½ÓµÄ·ï¿½ï¿½ï¿½
+            data-type: json  #  ï¿½ï¿½È¡ï¿½ï¿½Ñµï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Îªjson
+            rule-type: flow # ï¿½ï¿½ï¿½Ø¹ï¿½ï¿½ï¿½  rule-type ï¿½ï¿½ï¿½Ã±ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ÐµÄ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍµÄ¹ï¿½ï¿½ï¿½(flowï¿½ï¿½degradeï¿½ï¿½authorityï¿½ï¿½system, param-flow, gw-flow, gw-api-group)
         degrade:
           nacos:
-            server-addr: 10.28.114.158:8848
+            server-addr: 192.168.216.111:8848
             namespace: $(spring.cloud.nacos.discovery.namespace)
             data-id: minio-server-degrade
             group-id: DEFAULT_GROUP
@@ -48,7 +48,7 @@ spring:
             rule-type: degrade
         authority:
           nacos:
-            server-addr: 10.28.114.158:8848
+            server-addr: 192.168.216.111:8848
             namespace: $(spring.cloud.nacos.discovery.namespace)
             data-id: minio-server-authority
             group-id: DEFAULT_GROUP

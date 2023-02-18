@@ -65,7 +65,7 @@ public class SnmpServerImpl implements SnmpServer {
         ComTarget comTarget = new ComTarget();
         comTarget.setCommunity("public");
         comTarget.setVersion(SnmpConstants.version2c);
-        comTarget.setIpAddress("10.28.114.156");
+        comTarget.setIpAddress("192.168.137.156");
         comTarget.setRetries(2);
         comTarget.setTimeout(3*60);
         targetList.add(comTarget);
@@ -73,7 +73,7 @@ public class SnmpServerImpl implements SnmpServer {
         ComTarget comTarget2 = new ComTarget();
         comTarget2.setCommunity("public");
         comTarget2.setVersion(SnmpConstants.version2c);
-        comTarget2.setIpAddress("10.28.114.7");
+        comTarget2.setIpAddress("192.168.137.7");
         comTarget2.setRetries(2);
         comTarget2.setTimeout(3*60);
         targetList.add(comTarget2);
@@ -81,7 +81,7 @@ public class SnmpServerImpl implements SnmpServer {
         ComTarget comTarget3 = new ComTarget();
         comTarget3.setCommunity("public");
         comTarget3.setVersion(SnmpConstants.version2c);
-        comTarget3.setIpAddress("10.28.114.9");
+        comTarget3.setIpAddress("192.168.137.9");
         comTarget3.setRetries(2);
         comTarget3.setTimeout(3*60);
         targetList.add(comTarget3);

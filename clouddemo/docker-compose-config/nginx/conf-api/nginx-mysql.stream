@@ -1,0 +1,12 @@
+# 添加负载均衡配置
+upstream mysql {
+    hash $remote_addr consistent;
+    server 192.168.137.138:3306 weight=1 max_fails=3 fail_timeout=60s;
+}
+
+server {
+    listen       33061;
+    # proxy_connect_timeout 20s;
+    # proxy_timeout 30s;
+    proxy_pass mysql;
+}

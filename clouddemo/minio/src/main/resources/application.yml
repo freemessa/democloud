@@ -13,11 +13,11 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 10.28.114.158:8848
+        server-addr: 192.168.216.111:8848
         namespace: test
     sentinel:
       transport:
-        dashboard: 10.28.114.158:8858
+        dashboard: 192.168.216.111:8858
         port: 8719
       eager: true
       filter:
@@ -33,7 +33,7 @@ spring:
             rule-type: flow # 流控规则  rule-type 配置表示该数据源中的规则属于哪种类型的规则(flow，degrade，authority，system, param-flow, gw-flow, gw-api-group)
         degrade:
           nacos:
-            server-addr: 10.28.114.158:8848
+            server-addr: 192.168.216.111:8848
             namespace: d95f824e-9eb5-4181-be30-9fc4c5edf1f2
             data-id: minio-server-degrade
             group-id: DEFAULT_GROUP
@@ -41,7 +41,7 @@ spring:
             rule-type: degrade
         authority:
           nacos:
-            server-addr: 10.28.114.158:8848
+            server-addr: 192.168.216.111:8848
             namespace: d95f824e-9eb5-4181-be30-9fc4c5edf1f2
             data-id: minio-server-authority
             group-id: DEFAULT_GROUP
@@ -49,7 +49,7 @@ spring:
             rule-type: authority
 
 minio:
-  url: http://10.28.114.158:9001  # api 端口 非 console 端口
+  url: http://192.168.216.111:9001  # api 端口 非 console 端口
   accessKey: minio
   secretKey: minio12345
   bucketName: test #minio 空间名

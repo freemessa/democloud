@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/*
 @Configuration
 public class WebMvcConfigurerAdapter implements WebMvcConfigurer {
     @Override
@@ -12,5 +13,11 @@ public class WebMvcConfigurerAdapter implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/static/modeler");
         registry.addResourceHandler("/idm/**")
                 .addResourceLocations("classpath:/static/idm/");
+        registry.addResourceHandler("/mapper/**")
+                .addResourceLocations("classpath:/mapper/");
     }
 }
+
+ */
+
+

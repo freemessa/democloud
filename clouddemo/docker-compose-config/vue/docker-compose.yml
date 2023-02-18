@@ -1,0 +1,19 @@
+version: "1.0"
+services:
+  sky-page:
+    build:
+      context: app
+      dockerfile: Dockerfile
+    image: sky-page:1.0
+    container_name: sky-page
+    ports:
+      - 8081:8280
+      - 9528:9528
+    volumes:
+      - ./nginx/conf:/etc/nginx #配置文件挂载
+      - ./nginx/html/dist:/etc/nginx/html/sky  #静态页面路径
+      - ./nginx/logx:/etc/nginx/logs #日志文件挂载
+      - ./nginx/logs:/var/log/nginx #日志文件挂载
+      - ./app/data/filestorage:/usr/local/filestorage #本地文件挂载目录    
+    environment:
+      - TZ=Asia/Shangha

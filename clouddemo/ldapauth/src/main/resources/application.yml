@@ -12,14 +12,14 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 10.28.114.158:8848
+        server-addr: 192.168.216.111:8848
         namespace: test
-        ip: 10.28.114.158 #强制指定为服务接口ip
+        ip: 192.168.216.111 #强锟斤拷指锟斤拷为锟斤拷锟斤拷涌锟絠p
     sentinel:
       transport:
-        dashboard: 10.28.114.158:8858
+        dashboard: 192.168.216.111:8858
         port: 8719
-        client-ip: 10.28.114.158 #强制指定为服务接口ip
+        client-ip: 192.168.216.111 #强锟斤拷指锟斤拷为锟斤拷锟斤拷涌锟絠p
       eager: true
       filter:
         url-patterns: /**
@@ -28,10 +28,10 @@ spring:
           nacos:
             server-addr: $(spring.cloud.nacos.discovery.server-addr)
             namespace: $(spring.cloud.nacos.discovery.namespace)
-            data-id: minio-server-demo-flow  # 读取配置文件的 data-id
-            group-id: DEFAULT_GROUP # nacos连接的分组
-            data-type: json  #  读取培训文件类型为json
-            rule-type: flow # 流控规则  rule-type 配置表示该数据源中的规则属于哪种类型的规则(flow，degrade，authority，system, param-flow, gw-flow, gw-api-group)
+            data-id: minio-server-demo-flow  # 锟斤拷取锟斤拷锟斤拷锟侥硷拷锟斤拷 data-id
+            group-id: DEFAULT_GROUP # nacos锟斤拷锟接的凤拷锟斤拷
+            data-type: json  #  锟斤拷取锟斤拷训锟侥硷拷锟斤拷锟斤拷为json
+            rule-type: flow # 锟斤拷锟截癸拷锟斤拷  rule-type 锟斤拷锟矫憋拷示锟斤拷锟斤拷锟斤拷源锟叫的癸拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟酵的癸拷锟斤拷(flow锟斤拷degrade锟斤拷authority锟斤拷system, param-flow, gw-flow, gw-api-group)
 
   ldap:
     urls: ldap://127.0.0.1:389
