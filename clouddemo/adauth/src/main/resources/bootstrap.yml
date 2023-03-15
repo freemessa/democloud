@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: adauth-server
+
+  profiles:
+    active: @environment@
+  cloud:
+    nacos:
+      config:
+        server-addr: 10.28.114.177:8848   #配置中心地址
+        file-extension: yml  #后缀名
+        group: ${spring.profiles.active}Group      #分组
+        namespace: ${spring.profiles.active}  #命名空间的id

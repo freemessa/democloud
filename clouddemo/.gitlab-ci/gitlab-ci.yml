@@ -1,0 +1,41 @@
+stages:
+  - build
+  - deploy
+
+maven-build:
+  image: maven:3-jdk-8
+  stage: build
+  script:
+    - cd complete
+    - mvn clean package -B -Dmaven.test.skip=true
+  artifacts:
+    paths:
+      - complete/target/*.jar
+
+production:
+  image: maven:3-jdk-8
+  stage: deploy
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" >> ~/.ssh/config'
+  script:
+    # 在 web 服务器上创建应用目录
+    - ssh root@$APP_HOST "[[ -d /usr/local/apps/demo ]] || { mkdir -p /usr/local/apps/demo; }"
+    # 将应用部署启动脚本到 web 服务器上
+    - cat .gitlab-ci/run.sh | ssh root@$APP_HOST "cat > /usr/local/apps/demo/run.sh; chmod +x /usr/local/apps/demo/run.sh"
+    # 复制 jar 文件到服务器
+    - scp complete/target/spring-boot-complete-0.0.1-SNAPSHOT.jar root@$APP_HOST:/usr/local/apps/demo/clouddemo.jar
+    # 部署应用为系统服务
+    - cat .gitlab-ci/demo.service | ssh root@$APP_HOST "cat > ./demo.service "
+    - ssh root@$APP_HOST "[[ -f /etc/systemd/system/demo.service ]] || { mv ./demo.service /etc/systemd/system/demo.service && systemctl daemon-reload && systemctl enable demo.service; }"
+    - ssh root@$APP_HOST "[[ -f ./demo.service ]] && { rm ./demo.service; }"
+    # 重启应用服务
+    - ssh root@$APP_HOST "systemctl restart demo"
+    # 查看服务状态
+    - ssh root@$APP_HOST "systemctl status demo"
+  only:
+    - main
