@@ -124,6 +124,36 @@ services:
       - ./plugins/:/home/nacos/plugins
       - ./data:/home/nacos/data
       - nacos-conf:/home/nacos/conf
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins
+    ports:
+      - 18080:8080
+    expose:
+      - 8080
+      - 50000
+    volumes:  # 挂载目录  本地文件夹目录:容器文件夹目录
+      - /usr/docker/env/data/jenkins/:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+      - /usr/lib/x86_64-linux-gnu/libltdl.so.7:/usr/lib/x86_64-linux-gnu/libltdl.so.7
+    privileged: true
+    user: root
+    restart: always
+    environment:
+      - JAVA_OPTS='-Djava.util.logging.config.file=/var/jenkins_home/log.properties'
+      - TZ=Asia/Shanghai
+  portainer:
+    hostname: portainer
+    container_name: portainer-isgs
+    image: portainer/portainer:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./portainer_data:/data
+    ports:
+      - "9000:9000"
+    restart: always
+
 volumes:
   nacos-conf:
     driver: local

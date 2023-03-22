@@ -1,0 +1,15 @@
+jasypt:
+  encryptor:
+    password: ypk
+    #algorithm: PBEWITHHMACSHA512ANDAES_256
+    #key-obtention-iterations: 1000
+    #pool-size: 1
+    #provider-name: null
+    #provider-class-name: null
+    #string-output-type: base64
+    #salt-generator-classname: org.jasypt.salt.RandomSaltGenerator
+    #iv-generator-classname: org.jasypt.iv.RandomIvGenerator
+    #property:
+    #  prefix: DEF(
+    #  suffix: )
+

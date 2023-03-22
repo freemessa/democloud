@@ -4,8 +4,5 @@ server:
 spring:
   profiles:
     include: com
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 10.28.114.177:8848    #注册中心地址
+
 

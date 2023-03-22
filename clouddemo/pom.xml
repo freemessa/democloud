@@ -17,6 +17,8 @@
         <module>common</module>
         <module>ldapauth</module>
         <module>adauth</module>
+        <module>configcenter</module>
+        <module>minio</module>
     </modules>
     <groupId>com.example</groupId>
     <artifactId>clouddemo</artifactId>
@@ -72,8 +74,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-
     <build>
         <pluginManagement>
             <plugins>
@@ -111,6 +111,60 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/**</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
-
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <environment>local-z</environment>
+                <nacosserver>10.28.114.177:8848</nacosserver>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <environment>dev</environment>
+                <nacosserver>10.28.114.177:8848</nacosserver>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <environment>test</environment>
+                <nacosserver>10.28.114.177:8848</nacosserver>
+            </properties>
+        </profile>
+        <profile>
+            <id>uat</id>
+            <properties>
+                <environment>uat</environment>
+                <nacosserver>10.28.114.177:8848</nacosserver>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <environment>prod</environment>
+                <nacosserver>10.28.114.177:8848</nacosserver>
+            </properties>
+        </profile>
+    </profiles>
 </project>

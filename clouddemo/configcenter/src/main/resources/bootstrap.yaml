@@ -4,14 +4,25 @@ spring:
 
   profiles:
     #include: application-comm.yml
-    #active: dev
     active: @environment@
   cloud:
     nacos:
+      discovery:
+          server-addr: @nacosserver@
+          namespace: ${spring.profiles.active}
       config:
-        server-addr: 10.28.114.177:8848   #配置中心地址
+        server-addr: @nacosserver@  #配置中心地址
         file-extension: yml  #后缀名
         group: ${spring.profiles.active}Group      #分组
         namespace: ${spring.profiles.active}  #命名空间的id
+        #shared-configs:
+        #  - dataId: mysql-config.yml
+        #    group: DEFAULT_GROUP
+        #  - dataId: redis-config.yml
+        #    group: DEFAULT_GROUP
+        #extension-configs:
+        #  - dataId: gateway-routes #gateway-router.yml
+        #    group: DEFAULT_GROUP
+        #    refresh: true
 
 
